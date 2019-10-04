@@ -1,44 +1,7 @@
-body{
-   
-    background-color : bisque;
-    background-image: url(image2.jpg);
+body {
+    background-image:    url(./background_solid_spot_light_65990_1920x1080.jpg);
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
-}
-h1 {
-    width: 150px;
-    border: 2px solid black;
-    padding: 20px;
-    margin: 2px;
-    justify-content: center;
-    display: flex;
-}
-.name{
-    justify-content: center;
-    display: flex;
-    
-}
-input{
-    margin-top: 3em;
-   
-    
-}
-.langs{
-    justify-content: center;
-    display: flex;
-    
-}
-.click{
-    justify-content: center;
-    display: flex;
-   
-}
-.box{
-    justify-content: center;
-    display: flex;
-}
-.counterTotal{
-justify-content: center;
-display: flex;
+    background-attachment: fixed;   
 }

@@ -5,8 +5,8 @@ let Greeting = require("./greetings")
 
 let greetingsApp = Greeting();
 
-app.use(express.static('public'));
-
+// app.use(express.static('public'));
+app.use("**/css", express.static("public/css"))
 var exphbs = require('express-handlebars');
 
 const handlebarSetup = exphbs({
@@ -33,6 +33,8 @@ app.get('/', function (req, res) {
   app.post('/Greetings', function (req, res) {
 
     greetingsApp.setNames(req.body.textBtn, req.body.language)
+    
+    
     res.redirect('/')
   });
 
