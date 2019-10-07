@@ -5,7 +5,24 @@ let Greeting = require("./greetings")
 
 let greetingsApp = Greeting();
 
-// app.use(express.static('public'));
+const pg = require("pg");
+const Pool = pg.Pool;
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:3008/my_greetings';
+
+const pool = new Pool({
+  connectionString
+});
+
+function cb(err, result) {
+  if (err) {
+    console.log("Something went wrong", err);
+  } else {
+    console.log(result.rows);
+  }
+}
+pool.query("select * from people_greeted", cb);
+
 app.use("**/css", express.static("public/css"))
 var exphbs = require('express-handlebars');
 
@@ -22,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-  
+
   res.render('index', {
 
     names: greetingsApp.theMessage(),
@@ -30,13 +47,13 @@ app.get('/', function (req, res) {
   });
 
 })
-  app.post('/Greetings', function (req, res) {
+app.post('/Greetings', function (req, res) {
 
-    greetingsApp.setNames(req.body.textBtn, req.body.language)
-    
-    
-    res.redirect('/')
-  });
+  greetingsApp.setNames(req.body.textBtn, req.body.language)
+
+
+  res.redirect('/')
+});
 
 
 let PORT = process.env.PORT || 3008;
