@@ -18,12 +18,11 @@ let greetingsApp = Greeting();
 const pg = require('pg');
 const Pool = pg.Pool;
 
-const connectionString = process.env.DATABASE_URL || 'codex:codex123@postgresql://localhost:3004/my_greetings';
+const connectionString = process.env.DATABASE_URL || 'postgresql/codex:codex123//localhost:5432/my_greetings';
 
 const pool = new Pool({
   connectionString
 });
-
 function cb(err, result) {
   if (err) {
     console.log("Something went wrong", err);
@@ -54,28 +53,31 @@ app.get('/', function (req, res) {
 
     names: greetingsApp.theMessage(),
     myCounter: greetingsApp.counter()
+    //message: req.flash("message")
   });
 
 })
 app.post('/Greetings', function (req, res) {
   let inputName = req.body.textBtn;
   let radio = req.body.language;
-  greetingsApp.setNames(inputName, radio)
 
-  if ((!radio) && (!inputName)) {
-console.log("sesr");
+ 
+if (radio === undefined ) {
 
-    req.flash("message", "Please select language! or enter name")
+    req.flash("message", "Please select language!")
     res.redirect('/')
   }
-// else if (!inputName){
+else if (inputName === "" ){
 
-//     req.flash("message", "Please enter a valid name!")
-//     res.redirect('/')
-//   }
+    req.flash("message", "Please enter a valid name!")
+    res.redirect('/')
+  }
+  greetingsApp.setNames(inputName, radio)
+  res.redirect('/');
+
 });
 
-let PORT = process.env.PORT || 3004;
+let PORT = process.env.PORT || 3005;
 
 app.listen(PORT, function () {
   console.log('App starting on port', PORT);
