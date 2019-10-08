@@ -4,17 +4,17 @@ const Greeting = require('../greetings');
 describe('greeting' , function(){
     it('should greet a person in isiXhosa' , function(){
         var greetings = Greeting();
-        assert.deepEqual(greetings.setNames("Sesethu", "isiXhosa"), "Molo Sesethu");
+        assert.equal(greetings.setNames("Sesethu", "isiXhosa"), "Molo Sesethu");
 
       });
     it('should greet a person in English' , function(){
-        var greetings = Greeting()
-        assert.deepEqual(greetings.setNames("Daniel", "English"), "Hello Daniel");
+        var greetings = Greeting();
+        assert.equal(greetings.setNames("Daniel", "English"), "Hello Daniel");
 
       });
       it('should greet a person in Afrikaans' , function(){
-        var greetings = Greeting()
-        assert.deepEqual(greetings.setNames("Sam", "Afrikaans"), "Hallo Sam");
+        var greetings = Greeting();
+        assert.equal(greetings.setNames("Sam", "Afrikaans"), "Hallo Sam");
 
       });
       it('should be able to keep track of a name greeted' , function(){

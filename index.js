@@ -51,9 +51,9 @@ app.get('/', function (req, res) {
 
   res.render('index', {
 
-    names: greetingsApp.theMessage(),
+   
     myCounter: greetingsApp.counter()
-    //message: req.flash("message")
+  
   });
 
 })
@@ -65,7 +65,7 @@ app.post('/Greetings', function (req, res) {
 if (radio === undefined ) {
 
     req.flash("message", "Please select language!")
-    res.redirect('/')
+     res.redirect('/')
   }
 else if (inputName === "" ){
 
@@ -73,7 +73,9 @@ else if (inputName === "" ){
     res.redirect('/')
   }
   greetingsApp.setNames(inputName, radio)
-  res.redirect('/');
+  req.flash("greeted", greetingsApp.theMessage())
+
+  return res.redirect('/');
 
 });
 

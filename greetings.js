@@ -16,11 +16,10 @@ module.exports = function Greeting(data) {
 
     var upperCaseName = name.toUpperCase();
     
-        if(name){
+        if(name && lang){
               if (namesGreeted[upperCaseName] === undefined) {
             namesGreeted[upperCaseName] = 0;
         }
-        
     }
         if (lang === "English") {
             greeted = "Hello " + upperCaseName;
