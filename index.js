@@ -3,12 +3,22 @@ let app = express();
 let bodyParser = require('body-parser');
 let Greeting = require("./greetings")
 
+const flash = require('express-flash');
+const session = require('express-session');
+
+app.use(session({
+  secret: "<add an alert message>",
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash())
+
 let greetingsApp = Greeting();
 
-const pg = require("pg");
+const pg = require('pg');
 const Pool = pg.Pool;
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:3008/my_greetings';
+const connectionString = process.env.DATABASE_URL || 'codex:codex123@postgresql://localhost:3004/my_greetings';
 
 const pool = new Pool({
   connectionString
@@ -48,15 +58,24 @@ app.get('/', function (req, res) {
 
 })
 app.post('/Greetings', function (req, res) {
+  let inputName = req.body.textBtn;
+  let radio = req.body.language;
+  greetingsApp.setNames(inputName, radio)
 
-  greetingsApp.setNames(req.body.textBtn, req.body.language)
+  if ((!radio) && (!inputName)) {
+console.log("sesr");
 
+    req.flash("message", "Please select language! or enter name")
+    res.redirect('/')
+  }
+// else if (!inputName){
 
-  res.redirect('/')
+//     req.flash("message", "Please enter a valid name!")
+//     res.redirect('/')
+//   }
 });
 
-
-let PORT = process.env.PORT || 3008;
+let PORT = process.env.PORT || 3004;
 
 app.listen(PORT, function () {
   console.log('App starting on port', PORT);

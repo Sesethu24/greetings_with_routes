@@ -15,16 +15,7 @@ module.exports = function Greeting(data) {
     function setNames(name, lang) {
 
     var upperCaseName = name.toUpperCase();
-    //var smallCaseName = name.toLowerCase()
-        if (!lang) {
-
-            return "Please select language!"
-        }
-        else if (!allLetter(name)) {
-            
-            return "Please enter a valid name!"
-        }
-        
+    
         if(name){
               if (namesGreeted[upperCaseName] === undefined) {
             namesGreeted[upperCaseName] = 0;

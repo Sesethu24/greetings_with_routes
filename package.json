@@ -1,23 +1,32 @@
 {
   "name": "greetings-webapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "<<<<<<< HEAD [![Build Status](https://travis-ci.org/Sesethu24/greetings_with_routes.svg?branch=master)](https://travis-ci.org/Sesethu24/greetings_with_routes) ======= [![Build Status](https://travis-ci.org/Sesethu24/greetings_with_routes.svg?branch=master)](https://travis-ci.org/Sesethu24/greetings_with_routes) >>>>>>> 19dc60fef5ade2f86022b2cab826bf74eefec5f7",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha",
-    "start": "node index.js"
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sesethu24/greetings_with_routes.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sesethu24/greetings_with_routes/issues"
+  },
+  "homepage": "https://github.com/Sesethu24/greetings_with_routes#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chalk": "^2.4.2",
     "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-flash-messages": "^0.1.1",
     "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2",
     "pg": "^7.12.1"
-  },
-  "devDependencies": {
-    "mocha": "^6.2.0"
   }
 }
