@@ -23,14 +23,14 @@ const connectionString = process.env.DATABASE_URL || 'postgresql/codex:codex123/
 const pool = new Pool({
   connectionString
 });
-function cb(err, result) {
-  if (err) {
-    console.log("Something went wrong", err);
-  } else {
-    console.log(result.rows);
-  }
-}
-pool.query("select * from people_greeted", cb);
+// function cb(err, result) {
+//   if (err) {
+//     console.log("Something went wrong", err);
+//   } else {
+//     console.log(result.rows);
+//   }
+// }
+//pool.query("select * from people_greeted", cb);
 
 app.use("**/css", express.static("public/css"))
 var exphbs = require('express-handlebars');
@@ -51,13 +51,13 @@ app.get('/', function (req, res) {
 
   res.render('index', {
 
-   
-    myCounter: greetingsApp.counter()
+   myCounter: greetingsApp.counter()
   
   });
 
 })
 app.post('/Greetings', function (req, res) {
+
   let inputName = req.body.textBtn;
   let radio = req.body.language;
 
@@ -65,17 +65,17 @@ app.post('/Greetings', function (req, res) {
 if (radio === undefined ) {
 
     req.flash("message", "Please select language!")
-     res.redirect('/')
+    return res.redirect('/')
   }
 else if (inputName === "" ){
 
     req.flash("message", "Please enter a valid name!")
-    res.redirect('/')
+    return res.redirect('/')
   }
   greetingsApp.setNames(inputName, radio)
   req.flash("greeted", greetingsApp.theMessage())
 
-  return res.redirect('/');
+  res.redirect('/');
 
 });
 
