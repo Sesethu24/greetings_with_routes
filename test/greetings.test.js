@@ -1,59 +1,43 @@
 const assert = require('assert');
 const Greeting = require('../greetings');
+const pg = require("pg");
+const Pool = pg.Pool;
 
-describe('greeting' , function(){
-    // it('should greet a person in isiXhosa' , function(){
-    //     var greetings = Greeting();
-    //     assert.equal(greetings.setNames("Sesethu", "isiXhosa"), "Molo Sesethu");
+const connectionString = process.env.DATABASE_URL || 'postgresql://sesethu:pg123@localhost:5432/greetings_tests';
 
-    //   });
-    // it('should greet a person in English' , function(){
-    //     var greetings = Greeting();
-    //     assert.equal(greetings.setNames("Daniel", "English"), "Hello Daniel");
+const pool = new Pool({
+  connectionString
+});
 
-    //   });
-    //   it('should greet a person in Afrikaans' , function(){
-    //     var greetings = Greeting();
-    //     assert.equal(greetings.setNames("Sam", "Afrikaans"), "Hallo Sam");
+describe('The basic database web app', function () {
 
-    //   });
-      it('should be able to keep track of a name greeted' , function(){
-        var greet = Greeting()
-        assert.equal(greet.getName('Inga'),greet.getName());
+  beforeEach(async function () {
+    await pool.query("DELETE FROM people_greeted;");
+    
+  });
 
-      });
-      it('should not increment the counter when the same name is entered more than once' , function(){
-        var count = Greeting()
-        count.setNames("Phozie", "English");
-        count.setNames("Phozie", "English");
-        count.setNames("Phozie", "English");
+  it('should able to add a category', async function () {
+    let instance = Greeting(pool);
+    await instance.setNames("sbu");
+    let greetMe = await instance.getName();
+    assert.equal(1, greetMe.length);
+  });
 
-        assert.equal(1, count.counter());
+  it('should able to count the names greeted', async function () {
+    let instance = Greeting(pool);
+    await instance.setNames("sbu");
+    let greetMe = await instance.counter();
+    assert.equal(1, greetMe);
+  });
 
-      });
-      it('should count how many people were greeted' , function(){
-        var count = Greeting()
-        count.setNames("Phozie", "English");
-        count.setNames("Sethu", "isiXhosa");
-        count.setNames("Ongie", "Afrikaans");
+  it('should able to greet a person', async function () {
+    let instance = Greeting(pool);
+    await instance.setNames("sbu","English");
+    let greetMe = await instance.theMessage();
+    assert.equal("Hello SBU", greetMe);
+  });
 
-        assert.equal(3, count.counter());
-
-      });
-
-      it('should return true when a valid name is passed', ()=> {
-        var factFun = Greeting();
-        var name = "Tommy"
-
-        assert.equal(true, factFun.allLetter(name));
-
-      })
-
-      it('should return false when numbers or strange characters are passed', ()=> {
-        var factFun = Greeting();
-        var name = '7776';
-
-        assert.equal(false, factFun.allLetter(name));
-
-      })
+  after(function () {
+    pool.end();
+  })
 });

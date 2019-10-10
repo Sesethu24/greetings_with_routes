@@ -1,26 +1,9 @@
-module.exports = function Greeting(data) {
-
-    let namesGreeted = data || {};
+module.exports = function Greeting(pool) {
     let greeted;
 
-    function allLetter(input) {
-        var letters = /^[A-Za-z]+$/;
-        if (input.match(letters)) {
-            return true;
-        } else {
-            return false
-        }
-    }
-
-    function setNames(name, lang) {
-
-    var upperCaseName = name.toUpperCase();
-    
-        if(name && lang){
-              if (namesGreeted[upperCaseName] === undefined) {
-            namesGreeted[upperCaseName] = 0;
-        }
-    }
+    async function setNames(name, lang) {
+        let upperCaseName = name.toUpperCase()
+        await pool.query("INSERT INTO people_greeted (name_,greeted) VALUES ($1,$2);", [upperCaseName, 1])
         if (lang === "English") {
             greeted = "Hello " + upperCaseName;
         }
@@ -30,24 +13,26 @@ module.exports = function Greeting(data) {
         else if (lang === "Afrikaans") {
             greeted = "Hallo " + upperCaseName;
         }
-    }
-    function theMessage(){
-        return greeted;
+
     }
 
-    function counter() {
-        var k = Object.keys(namesGreeted)
-        return k.length;
+    async function getName() {
+        var names = await pool.query("SELECT * FROM people_greeted;")
+        return names.rows
     }
-    function getName() {
-       return namesGreeted;
+    async function counter() {
+        var count = await pool.query("SELECT COUNT(*) FROM people_greeted")
+        return count.rows[0].count;
+    }
+
+    function theMessage() {
+        return greeted;
     }
 
     return {
         setNames,
         getName,
         counter,
-        allLetter,
         theMessage
     }
 
