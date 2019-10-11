@@ -1,4 +1,5 @@
 module.exports = function Greeting(pool) {
+    
     let greeted;
 
     async function setNames(name, lang) {
