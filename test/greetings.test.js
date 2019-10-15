@@ -13,7 +13,7 @@ describe('The basic database web app', function () {
 
   beforeEach(async function () {
     await pool.query("DELETE FROM people_greeted;");
-    
+
   });
 
   it('should able to add a category', async function () {
@@ -32,7 +32,7 @@ describe('The basic database web app', function () {
 
   it('should able to greet a person', async function () {
     let instance = Greeting(pool);
-    await instance.setNames("sbu","English");
+    await instance.setNames("sbu", "English");
     let greetMe = await instance.theMessage();
     assert.equal("Hello SBU", greetMe);
   });

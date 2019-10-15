@@ -12,36 +12,21 @@
 <body>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <table class="table">
+        <div class="row justify-content-sm-center">
+            <div class="col-6-sm justify-content-sm-center">
+                <table class="table justify-content-sm-center">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Names Table</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each names}}
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                            <td class="justify-content-sm-center"><a href="/counter/{{this}}"> {{this}}</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>

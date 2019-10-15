@@ -47,12 +47,15 @@ const handlebarSetup = exphbs({
 app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(bodyParser.json())
 
 app.get('/', routes.index)
 app.post('/Greetings', routes.greet);
 app.get('/greeted', routes.greeted)
+app.get("/counter/:user", routes.counterFor)
 
 let PORT = process.env.PORT || 3005;
 
