@@ -29,17 +29,21 @@ module.exports = function Greeting(pool) {
     }
 
     async function eachName(name) {
-        let nameList = await pool.query("SELECT * FROM people_greeted;")
-        let filteredNames = [];
-        for (let i = 0; i < nameList.rows.length; i++) {
-            let element = nameList.rows[i].name_;
+        
+        let nameList = await pool.query("SELECT * FROM people_greeted WHERE name_ = $1;",[name.user]);
+        console.log(nameList.rows)
+        return nameList.rows[0]
 
-            if (element.name_ === name) {
-                filteredNames.push(element)
-            }
-        }
+        // let filteredNames = [];
+        // for (let i = 0; i < nameList.rows.length; i++) {
+        //     let element = nameList.rows[i].name_;
 
-        return filteredNames
+        //     if (element.name_ === name) {
+        //         filteredNames.push(element)
+        //     }
+        //}
+
+        //return filteredNames
     }
 
     async function countUser(name) {
@@ -48,12 +52,12 @@ module.exports = function Greeting(pool) {
 
         for (let i = 0; i < names.rows.length; i++) {
             let element = names.rows[i].name_;
-            console.log(element,"first run");
+            
             if (name === element) {
                 let user = names.rows[i].greeted
                 
                 total = user
-                console.log(user,"second run");
+               
             }
         }
         return total

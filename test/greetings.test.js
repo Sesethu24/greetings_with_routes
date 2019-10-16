@@ -16,21 +16,21 @@ describe('The basic database web app', function () {
 
   });
 
-  it('should able to add a category', async function () {
+  it('should be able to add a category', async function () {
     let instance = Greeting(pool);
     await instance.setNames("sbu");
     let greetMe = await instance.getName();
     assert.equal(1, greetMe.length);
   });
 
-  it('should able to count the names greeted', async function () {
+  it('should be able to count the names greeted', async function () {
     let instance = Greeting(pool);
     await instance.setNames("sbu");
     let greetMe = await instance.counter();
     assert.equal(1, greetMe);
   });
 
-  it('should able to greet a person', async function () {
+  it('should be able to greet a person', async function () {
     let instance = Greeting(pool);
     await instance.setNames("sbu", "English");
     let greetMe = await instance.theMessage();

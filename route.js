@@ -37,12 +37,14 @@ module.exports = function (greetingsApp) {
     async function counterFor(req, res) {
         let name = req.params;
         let names = await greetingsApp.eachName(name)
-        let counter = await greetingsApp.countUser(name)
+
+       
+        // let counter = await greetingsApp.countUser(name)
         
 
         res.render("users", {
-            user: name,
-            count: counter
+            user: name
+            
         })
 
     }
