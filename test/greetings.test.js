@@ -15,6 +15,11 @@ describe('The basic database web app', function () {
     await pool.query("DELETE FROM people_greeted;");
 
   });
+  // first test a name can be inserted
+
+  // then check if name has a count
+
+  // bring back greeted name and count
 
   it('should be able to add a category', async function () {
     let instance = Greeting(pool);

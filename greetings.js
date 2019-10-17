@@ -3,20 +3,28 @@ module.exports = function Greeting(pool) {
     let greeted;
 
     async function setNames(name, lang) {
-        let upperCaseName = name.toUpperCase()
-        await pool.query("INSERT INTO people_greeted (name_,greeted) VALUES ($1,$2);", [upperCaseName, 1])
-        if (lang === "English") {
-            greeted = "Hello " + upperCaseName;
-        } else if (lang === "isiXhosa") {
-            greeted = "Molo " + upperCaseName;
-        } else if (lang === "Afrikaans") {
-            greeted = "Hallo " + upperCaseName;
+        let upperCaseName = name.toUpperCase() 
+
+        var names = await pool.query("SELECT name_ FROM people_greeted")
+
+        if (names === "") {
+            await pool.query("SELECT * FROM people_greeted WHERE name = $1", [upperCaseName])
+        } else if (name.rows === 1) {
+            await pool.query("UPDATE people_greeted SET greeted = greeted +1 WHERE name_ = $1", [upperCaseName])
+        } else {
+            await pool.query("INSERT INTO people_greeted (name_,greeted) VALUES ($1,$2);", [upperCaseName, 1])
+            if (lang === "English") {
+                greeted = "Hello " + upperCaseName;
+            } else if (lang === "isiXhosa") {
+                greeted = "Molo " + upperCaseName;
+            } else if (lang === "Afrikaans") {
+                greeted = "Hallo " + upperCaseName;
+            }
         }
-
     }
-
     async function getName() {
-        var names = await pool.query("SELECT * FROM people_greeted;")
+        var names = await pool.query("SELECT name_ FROM people_greeted")
+        console.log(names.rows)
         return names.rows
     }
     async function counter() {
@@ -29,38 +37,25 @@ module.exports = function Greeting(pool) {
     }
 
     async function eachName(name) {
-        
-        let nameList = await pool.query("SELECT * FROM people_greeted WHERE name_ = $1;",[name.user]);
-        console.log(nameList.rows)
-        return nameList.rows[0]
 
-        // let filteredNames = [];
-        // for (let i = 0; i < nameList.rows.length; i++) {
-        //     let element = nameList.rows[i].name_;
-
-        //     if (element.name_ === name) {
-        //         filteredNames.push(element)
-        //     }
-        //}
-
-        //return filteredNames
-    }
-
-    async function countUser(name) {
-        let names = await pool.query("SELECT * FROM people_greeted;")
-        let total = 0
-
-        for (let i = 0; i < names.rows.length; i++) {
-            let element = names.rows[i].name_;
-            
-            if (name === element) {
-                let user = names.rows[i].greeted
-                
-                total = user
-               
+        let nameList = await pool.query("SELECT * FROM people_greeted");
+        if (name) {
+            let filteredNames = {};
+            for (let i = 0; i < nameList.rows.length; i++) {
+                let element = nameList.rows[i].name_;
+                if (element === name) {
+                    filteredNames = nameList.rows[i]
+                }
             }
+
+            return filteredNames
+        } else {
+            return nameList.rows
         }
-        return total
+    }
+    async function resetData() {
+        let reset = await pool.query("DELETE FROM people_greeted;")
+        return reset;
     }
 
     return {
@@ -69,7 +64,7 @@ module.exports = function Greeting(pool) {
         counter,
         theMessage,
         eachName,
-        countUser
+        resetData
     }
 
 }

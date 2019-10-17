@@ -55,7 +55,7 @@ app.use(bodyParser.json())
 app.get('/', routes.index)
 app.post('/Greetings', routes.greet);
 app.get('/greeted', routes.greeted)
-app.get("/counter/:user", routes.counterFor)
+app.get("/counter/:user", routes.eachUser)
 
 let PORT = process.env.PORT || 3005;
 
