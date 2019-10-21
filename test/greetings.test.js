@@ -15,13 +15,7 @@ describe('The basic database web app', function () {
     await pool.query("DELETE FROM people_greeted;");
 
   });
-  // first test a name can be inserted
-
-  // then check if name has a count
-
-  // bring back greeted name and count
-
-  it('should be able to add a category', async function () {
+   it('should be able to add a category', async function () {
     let instance = Greeting(pool);
     await instance.setNames("sbu");
     let greetMe = await instance.getName();
@@ -41,8 +35,7 @@ describe('The basic database web app', function () {
     let greetMe = await instance.theMessage();
     assert.equal("Hello SBU", greetMe);
   });
-
-  after(function () {
+after(function () {
     pool.end();
   })
 });

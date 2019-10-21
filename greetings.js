@@ -25,7 +25,7 @@ module.exports = function Greeting(pool) {
     }
     async function getName() {
         var names = await pool.query("SELECT name_ FROM people_greeted")
-        console.log(names.rows)
+       
         return names.rows
     }
     async function counter() {
