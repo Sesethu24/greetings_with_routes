@@ -56,6 +56,7 @@ app.get('/', routes.index)
 app.post('/Greetings', routes.greet);
 app.get('/greeted', routes.greeted)
 app.get("/counter/:user", routes.eachUser)
+app.post('/reset', routes.clearButton);
 
 let PORT = process.env.PORT || 3005;
 

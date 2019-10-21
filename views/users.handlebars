@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/greet.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
+        <div style="padding-top:20%" class="row justify-content-sm-center">
             <div class="col-12-sm">
-                <h1>Hello</h1>
-            
-                {{user.name_}}
-                {{user.greeted}}
-               
+                <h1 class="">Hello</h1>
+                <span class="text-white">{{user.name_}} was greeted {{user.greeted}} time(s)</span>
             </div>
         </div>
     </div>

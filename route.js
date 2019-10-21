@@ -8,22 +8,35 @@ module.exports = function (greetingsApp) {
         })
     }
 
+    function allLetter(input) {
+        var letters = /^[A-Za-z]+$/;
+        if (input.match(letters)) {
+            return true;
+        } else {
+            return false
+        }
+    }
+
+
     async function greet(req, res) {
 
         let inputName = req.body.textBtn;
         let radio = req.body.language;
-       
+        if (allLetter(inputName) === true) {
 
-        if (radio === undefined) {
+            if (radio === undefined) {
 
-            req.flash("message", "Please select language!")
-            return res.redirect('/')
-        } else if (inputName === "") {
+                req.flash("message", "Please select language!")
+                return res.redirect('/')
+            } else if (inputName === "") {
 
-            req.flash("message", "Please enter a valid name!")
-            return res.redirect('/')
+                req.flash("message", "Please enter a valid name!")
+                return res.redirect('/')
+            }
+            await greetingsApp.setNames(inputName, radio)
+        } else {
+            req.flash("message", "Incorrect name")
         }
-        await greetingsApp.setNames(inputName, radio)
         res.redirect('/')
     }
 
@@ -40,17 +53,23 @@ module.exports = function (greetingsApp) {
 
         res.render("users", {
             user: names
-            
-        })
 
+        })
     }
+    async function clearButton(req, res) {
+        await greetingsApp.resetData()
+        res.redirect('/')
+    }
+
 
 
     return {
         index,
         greet,
         greeted,
-        eachUser
+        eachUser,
+        clearButton,
+        allLetter
     }
 
 }
